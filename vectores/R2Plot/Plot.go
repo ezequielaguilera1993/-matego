@@ -60,8 +60,8 @@ const (
 )
 
 func (g *Graficadora) drawAxes() {
-	g.drawArrowBidirectional(g.left, g.right, Green)
-	g.drawArrowBidirectional(g.Up, g.Down, Blue)
+	g.drawArrowBidirectional(Vector{Inicio: g.left, Fin: g.right}, Green)
+	g.drawArrowBidirectional(Vector{Inicio: g.Up, Fin: g.Down}, Blue)
 }
 
 func NewPlotter(vectores []Vector) {

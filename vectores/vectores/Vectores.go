@@ -8,17 +8,14 @@ import (
 // Punto representa un punto en el plano
 type Punto []float64
 
-// ParOrdenado representa un par ordenado en el plano
-type ParOrdenado struct {
+// Vector representa un vector en el plano. Idéntico a un par ordenado.
+type Vector struct {
 	Inicio, Fin Punto
 }
 
-// Vector representa un vector en el plano. Idéntico a un par ordenado.
-type Vector ParOrdenado
-
 // V crea un vector a partir de dos puntos
-func V(parOrdenado ParOrdenado) Vector {
-	return Vector(parOrdenado)
+func V(vector Vector) Vector {
+	return vector
 }
 
 // X calcula el producto escalar de dos vectores
@@ -82,6 +79,16 @@ func (v Vector) GetEndY() float64 {
 	return v.Fin.GetY()
 }
 
+// GetStartN devuelve la coordenada n del primer punto un vector
+func (v Vector) GetStartN(n int) float64 {
+	return v.Inicio.GetN(n)
+}
+
+// GetEndN devuelve la coordenada n del segundo punto un vector
+func (v Vector) GetEndN(n int) float64 {
+	return v.Fin.GetN(n)
+}
+
 // GetX devuelve la coordenada x de un vector
 func (p Punto) GetX() float64 {
 	return p[0]
@@ -95,4 +102,9 @@ func (p Punto) GetY() float64 {
 // GetZ devuelve la coordenada z de un vector
 func (p Punto) GetZ() float64 {
 	return p[2]
+}
+
+// GetN devuelve la coordenada n de un vector
+func (p Punto) GetN(n int) float64 {
+	return p[n]
 }
