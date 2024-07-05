@@ -67,7 +67,7 @@ func (g *Graficadora) drawAxes() {
 func NewPlotter(vectores []Vector) {
 	graficadora := &Graficadora{Vectores: vectores}
 
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(640*1.2, 480*1.2)
 	ebiten.SetWindowTitle("Graficadora de Vectores")
 
 	if err := ebiten.RunGame(graficadora); err != nil {

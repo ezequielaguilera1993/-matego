@@ -13,14 +13,22 @@ type Vector struct {
 	Inicio, Fin Punto
 }
 
-// V crea un vector a partir de dos puntos
-func V(vector Vector) Vector {
-	return vector
+// V crea un nuevo vector con puntos de inicio y fin.
+// Si no se proporcionan puntos, se utilizan valores predeterminados.
+func V(puntos ...Punto) Vector {
+	switch len(puntos) {
+	case 1:
+		return Vector{Inicio: Punto{0, 0}, Fin: puntos[0]}
+	case 2:
+		return Vector{Inicio: puntos[0], Fin: puntos[1]}
+	default:
+		panic("solo se permiten uno o dos puntos para crear un vector")
+	}
 }
 
 // X calcula el producto escalar de dos vectores
 func (v Vector) X(vector Vector) float64 {
-	return v.GetStartX()*vector.GetStartX() + v.GetStartY()*vector.GetEndY()
+	return v.GetStartX()*vector.GetStartX() + v.GetEndY()*vector.GetEndY()
 }
 
 // Add suma dos vectores

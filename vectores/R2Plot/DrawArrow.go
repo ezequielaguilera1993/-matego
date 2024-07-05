@@ -21,7 +21,7 @@ func (g *Graficadora) drawArrowPoint(vector Vector, bidirectional bool, clr colo
 	angle := math.Atan2(dy, dx)
 
 	// Define la longitud de las alas de la flecha
-	arrowLength := float64(10)
+	arrowLength := vector.Magnitude()
 	arrowAngle := math.Pi / 6 // 30 grados
 
 	// Calcula los puntos de las alas
@@ -48,6 +48,7 @@ func (g *Graficadora) drawArrowPoint(vector Vector, bidirectional bool, clr colo
 		v.StrokeLine(g.screen, float32(startX), float32(startY), float32(x2), float32(y2), 2, clr, true)
 	}
 }
+
 func (g *Graficadora) drawArrowLowLevel(vector Vector, bidirectional bool, clr color.Color) {
 
 	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), 2, clr, true)
