@@ -8,18 +8,18 @@ import (
 
 func main() {
 
-	v1 := Vector{Inicio: Punto{0, 0}, Fin: Punto{200, 200}}
-	v2 := Vector{Inicio: Punto{120, 90}, Fin: Punto{130, 100}}
-	//
-	NewPlotter([]Vector{v1, v2})
+	//v1 := V(Punto{10, 10})
+	//v2 := V(Punto{20, 20})
+
+	NewPlotter(createRandomVectors())
 
 }
 
 func createRandomVectors() []Vector {
 	//10 vectores random con un for. Usa rand, quiero vectores entre 10 y 100 numeros
-	vectors := make([]Vector, 10)
-	maxn := 100.0
-	minn := -100.0
+	vectors := make([]Vector, 60)
+	maxn := 20.0
+	minn := -20.0
 	for i := range vectors {
 		vectors[i] = Vector{
 			Inicio: Punto{rand.Float64()*(maxn-minn) + minn, rand.Float64()*(maxn-minn) + minn},

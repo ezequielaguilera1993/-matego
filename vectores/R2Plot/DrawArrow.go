@@ -4,10 +4,9 @@ import (
 	v "github.com/hajimehoshi/ebiten/v2/vector"
 	"image/color"
 	"math"
-	. "vectores/vectores"
 )
 
-func (g *Graficadora) drawArrowPoint(vector Vector, bidirectional bool, clr color.Color) {
+func (g *Graficadora) drawArrowPoint(vector PlotVector, bidirectional bool, scale float64, clr color.Color) {
 
 	startX := vector.GetStartX()
 	startY := vector.GetStartY()
@@ -21,7 +20,7 @@ func (g *Graficadora) drawArrowPoint(vector Vector, bidirectional bool, clr colo
 	angle := math.Atan2(dy, dx)
 
 	// Define la longitud de las alas de la flecha
-	arrowLength := vector.Magnitude()
+	arrowLength := vector.Magnitude() * scale
 	arrowAngle := math.Pi / 6 // 30 grados
 
 	// Calcula los puntos de las alas
@@ -49,17 +48,16 @@ func (g *Graficadora) drawArrowPoint(vector Vector, bidirectional bool, clr colo
 	}
 }
 
-func (g *Graficadora) drawArrowLowLevel(vector Vector, bidirectional bool, clr color.Color) {
-
-	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), 2, clr, true)
-	g.drawArrowPoint(vector, bidirectional, clr)
+func (g *Graficadora) drawArrowLowLevel(vector PlotVector, bidirectional bool, scale float64) {
+	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), 2, vector.Color, true)
+	g.drawArrowPoint(vector, bidirectional, scale, vector.Color)
 }
 
-func (g *Graficadora) drawArrowBidirectional(vector Vector, clr color.Color) {
-	g.drawArrowLowLevel(vector, true, clr)
+func (g *Graficadora) drawArrowBidirectional(vector PlotVector) {
+	g.drawArrowLowLevel(vector, true, 0.025)
 
 }
 
-func (g *Graficadora) drawArrow(vector Vector, clr color.Color) {
-	g.drawArrowLowLevel(vector, false, clr)
+func (g *Graficadora) drawArrow(vector PlotVector) {
+	g.drawArrowLowLevel(vector, false, 0.30)
 }

@@ -49,7 +49,7 @@ func (v Vector) Sub(vector Vector) Vector {
 
 // Magnitude calcula la magnitud de un vector
 func (v Vector) Magnitude() float64 {
-	return math.Sqrt(v.X(v))
+	return math.Sqrt(math.Pow(v.GetEndX()-v.GetStartX(), 2) + math.Pow(v.GetEndY()-v.GetStartY(), 2))
 }
 
 // AngleBetweenVectors calcula el ángulo entre dos vectores
