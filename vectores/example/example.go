@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"math/rand"
 	. "vectores/R2Plot"
 	. "vectores/vectores"
@@ -8,25 +9,38 @@ import (
 
 func main() {
 
-	//v1 := V(Punto{10, 10})
-	//v2 := V(Punto{20, 20})
+	ResX := 20
+	ResY := 20
 
-	NewPlotter(nil, true, true)
+	NewPlotter(createRandomVectors(), Config{
+		PlayerEnabled:     true,
+		AnimationEnabled:  true,
+		AxesEnabled:       true,
+		AxesDetailEnabled: true,
+		TobsEnabled:       true,
+		ResolutionX:       ResX,
+		ResolutionY:       ResY,
+	})
 
 }
 
 func createRandomVectors() []Vector {
-	//10 vectores random con un for. Usa rand, quiero vectores entre 10 y 100 numeros
+	vectors := make([]Vector, 1)
 
-	vectors := make([]Vector, 60)
-	maxn := 20.0
-	minn := -20.0
 	for i := range vectors {
-		vectors[i] = Vector{
-			Inicio: Punto{rand.Float64()*(maxn-minn) + minn, rand.Float64()*(maxn-minn) + minn},
-			Fin:    Punto{rand.Float64()*(maxn-minn) + minn, rand.Float64()*(maxn-minn) + minn},
-		}
+		// Genera un ángulo aleatorio entre 0 y 2π
+		angle := 2 * math.Pi * rand.Float64()
 
+		// Genera una longitud aleatoria entre 0.5 y 4
+		length := 0.5 + 3.5*rand.Float64()
+
+		// Genera un punto de origen aleatorio
+		maxSeparation := 19.0
+		originX := rand.Float64()*maxSeparation - maxSeparation/2 // Ajusta el rango según sea necesario
+		originY := rand.Float64()*maxSeparation - maxSeparation/2 // Ajusta el rango según sea necesario
+
+		// Crea un vector con el origen, la longitud y el ángulo generados
+		vectors[i] = V(Punto{originX, originY}, Punto{originX + length*math.Cos(angle), originY + length*math.Sin(angle)})
 	}
 
 	return vectors

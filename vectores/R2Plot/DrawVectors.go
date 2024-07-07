@@ -1,10 +1,10 @@
 package R2Plotter
 
-// drawVectors dibuja los vectores en la pantalla, le suma el punto de origen (g.Origin) a cada vector
-func (g *Graficadora) drawVectors() {
+// drawTobs dibuja los vectores en la pantalla, le suma el punto de origen (g.Origin) a cada vector
+func (g *Graficadora) drawTobs() {
 
-	for _, vector := range g.Vectores {
-		g.drawArrow(vector)
+	for _, vector := range g.Tobs {
+		g.drawArrowSimple(vector)
 	}
 
 }

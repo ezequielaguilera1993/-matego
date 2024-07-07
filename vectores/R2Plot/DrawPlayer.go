@@ -2,30 +2,20 @@ package R2Plotter
 
 import (
 	"fmt"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 func (g *Graficadora) drawPlayer() {
-	g.drawArrow(g.PlayerVector)
+	g.drawArrowSimple(g.PlayerVector)
 
 	xc, yc := g.PlayerVector.GetComponents()
-	g.drawArrow(PlotVector{xc, Blue})
-	g.drawArrow(PlotVector{yc, Green})
+	g.drawArrowSimple(plotVector{xc, Blue})
+	g.drawArrowSimple(plotVector{yc, Green})
 
-	x1 := g.PlayerVector.GetStartX()
-	y1 := g.PlayerVector.GetStartY()
-	x2 := g.PlayerVector.GetEndX()
-	y2 := g.PlayerVector.GetEndY()
+	x0 := g.PlayerVector.GetStartX()
+	y0 := g.PlayerVector.GetStartY()
+	x1 := g.PlayerVector.GetEndX()
+	y1 := g.PlayerVector.GetEndY()
 
-	x1f :=
-		g.x(x1)
-	y1f :=
-		g.y(y1)
-	x2f :=
-		g.x(x2)
-	y2f :=
-		g.y(y2)
-
-	ebitenutil.DebugPrintAt(g.screen, fmt.Sprintf("x1: %f , y1: %f ; x2: %f , y2: %f", x1f, y1f, x2f, y2f), int(x1), int(y1))
+	g.debugPrintRelativeAtLowLevel(x0, y0, fmt.Sprintf("(%.1f,%.1f) ; (%.1f,%.1f)", x0, y0, x1, y1))
 
 }

@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	i = V(Punto{1, 0})
-	j = V(Punto{0, 1})
+	I = V(Punto{1, 0})
+	J = V(Punto{0, 1})
 )
 
 // Punto representa un punto en el plano
@@ -31,13 +31,13 @@ func V(puntos ...Punto) Vector {
 	}
 }
 
-// X calcula el producto escalar de dos vectores
-func (v Vector) X(vector Vector) float64 {
+// Scalar calcula el producto escalar de dos vectores
+func (v *Vector) Scalar(vector Vector) float64 {
 	return v.GetStartX()*vector.GetStartX() + v.GetEndY()*vector.GetEndY()
 }
 
 // Add suma dos vectores
-func (v Vector) Add(vector Vector) Vector {
+func (v *Vector) Add(vector Vector) Vector {
 	return Vector{
 		Inicio: Punto{v.GetStartX() + vector.GetStartX(), v.GetStartY() + vector.GetStartY()},
 		Fin:    Punto{v.GetEndX() + vector.GetEndX(), v.GetEndY() + vector.GetEndY()},
@@ -45,66 +45,74 @@ func (v Vector) Add(vector Vector) Vector {
 }
 
 // Sub resta dos vectores
-func (v Vector) Sub(vector Vector) Vector {
+func (v *Vector) Sub(vector Vector) Vector {
 	return Vector{
 		Inicio: Punto{v.GetStartX() - vector.GetStartX(), v.GetStartY() - vector.GetStartY()},
 		Fin:    Punto{v.GetEndX() - vector.GetEndX(), v.GetEndY() - vector.GetEndY()},
 	}
 }
 
-func (v Vector) GetComponents() (x Vector, y Vector) {
+// X realiza el multiplo del vector por un numero real
+func (v *Vector) X(scalar float64) Vector {
+	return Vector{
+		Inicio: Punto{v.GetStartX() * scalar, v.GetStartY() * scalar},
+		Fin:    Punto{v.GetEndX() * scalar, v.GetEndY() * scalar},
+	}
+}
+
+func (v *Vector) GetComponents() (x Vector, y Vector) {
 	x = V(Punto{v.GetStartX(), v.GetStartY()}, Punto{v.GetEndX(), v.GetStartY()})
 	y = V(Punto{v.GetStartX(), v.GetStartY()}, Punto{v.GetStartX(), v.GetEndY()})
 	return
 }
 
 // Magnitude calcula la magnitud de un vector
-func (v Vector) Magnitude() float64 {
+func (v *Vector) Magnitude() float64 {
 	return math.Sqrt(math.Pow(v.GetEndX()-v.GetStartX(), 2) + math.Pow(v.GetEndY()-v.GetStartY(), 2))
 }
 
 // AngleBetweenVectors calcula el ángulo entre dos vectores
-func (v Vector) AngleBetweenVectors(vector Vector) float64 {
-	return math.Acos(v.X(vector) / (v.Magnitude() * vector.Magnitude()))
+func (v *Vector) AngleBetweenVectors(vector Vector) float64 {
+	return math.Acos(v.Scalar(vector) / (v.Magnitude() * vector.Magnitude()))
 }
 
 // IsOrthogonal determina si dos vectores son ortogonales
-func (v Vector) IsOrthogonal(vector Vector) bool {
-	return v.X(vector) == 0
+func (v *Vector) IsOrthogonal(vector Vector) bool {
+	return v.Scalar(vector) == 0
 }
 
 // Print imprime un vector
-func (v Vector) Print() {
+func (v *Vector) Print() {
 	fmt.Println(v)
 }
 
 // GetStartX devuelve la coordenada x del primer punto un vector
-func (v Vector) GetStartX() float64 {
+func (v *Vector) GetStartX() float64 {
 	return v.Inicio.GetX()
 }
 
 // GetStartY devuelve la coordenada y del primer punto un vector
-func (v Vector) GetStartY() float64 {
+func (v *Vector) GetStartY() float64 {
 	return v.Inicio.GetY()
 }
 
 // GetEndX devuelve la coordenada x del segundo punto un vector
-func (v Vector) GetEndX() float64 {
+func (v *Vector) GetEndX() float64 {
 	return v.Fin.GetX()
 }
 
 // GetEndY devuelve la coordenada y del segundo punto un vector
-func (v Vector) GetEndY() float64 {
+func (v *Vector) GetEndY() float64 {
 	return v.Fin.GetY()
 }
 
 // GetStartN devuelve la coordenada n del primer punto un vector
-func (v Vector) GetStartN(n int) float64 {
+func (v *Vector) GetStartN(n int) float64 {
 	return v.Inicio.GetN(n)
 }
 
 // GetEndN devuelve la coordenada n del segundo punto un vector
-func (v Vector) GetEndN(n int) float64 {
+func (v *Vector) GetEndN(n int) float64 {
 	return v.Fin.GetN(n)
 }
 

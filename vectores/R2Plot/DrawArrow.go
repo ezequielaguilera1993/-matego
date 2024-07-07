@@ -1,12 +1,11 @@
 package R2Plotter
 
 import (
-	v "github.com/hajimehoshi/ebiten/v2/vector"
 	"image/color"
 	"math"
 )
 
-func (g *Graficadora) drawArrowPoint(vector PlotVector, bidirectional bool, scale float64, clr color.Color) {
+func (g *Graficadora) drawArrowPoint(vector plotVector, bidirectional bool, scale float64, clr color.Color) {
 
 	startX := vector.GetStartX()
 	startY := vector.GetStartY()
@@ -31,8 +30,8 @@ func (g *Graficadora) drawArrowPoint(vector PlotVector, bidirectional bool, scal
 	y2 := endY - arrowLength*math.Sin(angle+arrowAngle)
 
 	// Dibuja las alas de la flecha
-	v.StrokeLine(g.screen, float32(endX), float32(endY), float32(x1), float32(y1), 2, clr, true)
-	v.StrokeLine(g.screen, float32(endX), float32(endY), float32(x2), float32(y2), 2, clr, true)
+	g.drawLineLowLevel(endX, endY, x1, y1, 2, clr, true)
+	g.drawLineLowLevel(endX, endY, x2, y2, 2, clr, true)
 
 	if bidirectional {
 		// Calcula los puntos de las alas
@@ -43,21 +42,21 @@ func (g *Graficadora) drawArrowPoint(vector PlotVector, bidirectional bool, scal
 		y2 = startY + arrowLength*math.Sin(angle+arrowAngle)
 
 		// Dibuja las alas de la flecha
-		v.StrokeLine(g.screen, float32(startX), float32(startY), float32(x1), float32(y1), 2, clr, true)
-		v.StrokeLine(g.screen, float32(startX), float32(startY), float32(x2), float32(y2), 2, clr, true)
+		g.drawLineLowLevel(startX, startY, x1, y1, 2, clr, true)
+		g.drawLineLowLevel(startX, startY, x2, y2, 2, clr, true)
 	}
 }
 
-func (g *Graficadora) drawArrowLowLevel(vector PlotVector, bidirectional bool, scale float64, width float64) {
-	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), float32(width), vector.Color, true)
+func (g *Graficadora) drawArrow(vector plotVector, bidirectional bool, scale float64, width float64) {
+	g.drawLineLowLevel(vector.GetStartX(), vector.GetStartY(), vector.GetEndX(), vector.GetEndY(), 2, vector.Color, true)
 	g.drawArrowPoint(vector, bidirectional, scale, vector.Color)
 }
 
-func (g *Graficadora) drawArrowBidirectional(vector PlotVector) {
-	g.drawArrowLowLevel(vector, true, 0.025, 1)
+func (g *Graficadora) drawArrowBidirectional(vector plotVector) {
+	g.drawArrow(vector, true, 0.025, 1)
 
 }
 
-func (g *Graficadora) drawArrow(vector PlotVector) {
-	g.drawArrowLowLevel(vector, false, 0.30, 2)
+func (g *Graficadora) drawArrowSimple(vector plotVector) {
+	g.drawArrow(vector, false, 0.30, 2)
 }
