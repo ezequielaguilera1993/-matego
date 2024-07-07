@@ -5,6 +5,11 @@ import (
 	"math"
 )
 
+var (
+	i = V(Punto{1, 0})
+	j = V(Punto{0, 1})
+)
+
 // Punto representa un punto en el plano
 type Punto []float64
 
@@ -45,6 +50,12 @@ func (v Vector) Sub(vector Vector) Vector {
 		Inicio: Punto{v.GetStartX() - vector.GetStartX(), v.GetStartY() - vector.GetStartY()},
 		Fin:    Punto{v.GetEndX() - vector.GetEndX(), v.GetEndY() - vector.GetEndY()},
 	}
+}
+
+func (v Vector) GetComponents() (x Vector, y Vector) {
+	x = V(Punto{v.GetStartX(), v.GetStartY()}, Punto{v.GetEndX(), v.GetStartY()})
+	y = V(Punto{v.GetStartX(), v.GetStartY()}, Punto{v.GetStartX(), v.GetEndY()})
+	return
 }
 
 // Magnitude calcula la magnitud de un vector

@@ -48,16 +48,16 @@ func (g *Graficadora) drawArrowPoint(vector PlotVector, bidirectional bool, scal
 	}
 }
 
-func (g *Graficadora) drawArrowLowLevel(vector PlotVector, bidirectional bool, scale float64) {
-	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), 2, vector.Color, true)
+func (g *Graficadora) drawArrowLowLevel(vector PlotVector, bidirectional bool, scale float64, width float64) {
+	v.StrokeLine(g.screen, float32(vector.GetStartX()), float32(vector.GetStartY()), float32(vector.GetEndX()), float32(vector.GetEndY()), float32(width), vector.Color, true)
 	g.drawArrowPoint(vector, bidirectional, scale, vector.Color)
 }
 
 func (g *Graficadora) drawArrowBidirectional(vector PlotVector) {
-	g.drawArrowLowLevel(vector, true, 0.025)
+	g.drawArrowLowLevel(vector, true, 0.025, 1)
 
 }
 
 func (g *Graficadora) drawArrow(vector PlotVector) {
-	g.drawArrowLowLevel(vector, false, 0.30)
+	g.drawArrowLowLevel(vector, false, 0.30, 2)
 }
